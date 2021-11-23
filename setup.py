@@ -195,7 +195,7 @@ cpu_extension = dict(
 
 response_cpu_ext = Extension(
     "pygpuexample_cpu",
-    sources=["src/GPUExample.cpp", "src/gpu_example.pyx"],
+    sources=["src/GPUExample.cpp", "src/gpu_example_cpu.pyx"],
     **cpu_extension
 )
 
