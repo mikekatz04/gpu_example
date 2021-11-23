@@ -2,6 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
+try:
+    import cupy as xp
+    gpu_available = True
+
+except (ImportError, ModuleNotFoundError) as e:
+    import numpy as xp
+    gpu_available = False
+
+
 from gpuexample.gpuexample import *
 
 np.random.seed(1000)
@@ -25,7 +34,15 @@ for _ in range(num):
     output_wave = wave_generator(A, f, phi, dt=dt, T=T)
 et = time.perf_counter()
 
-n = int(T * YRSID_SI / dt)
-print(f"Duration per evaluation: {(et - st)/num}")
-plt.plot(np.arange(n) * dt, output_wave.T)
-plt.show()
+print(f"Duration per evaluation CPU: {(et - st)/num}")
+
+if gpu_available:
+    wave_generator = pyGPUExample(use_gpu=True)
+    num = 100
+    # time it
+    st = time.perf_counter()
+    for _ in range(num):
+        output_wave = wave_generator_gpu(A, f, phi, dt=dt, T=T)
+    et = time.perf_counter()
+
+    print(f"Duration per evaluation GPU: {(et - st)/num}")
