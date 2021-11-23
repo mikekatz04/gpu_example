@@ -38,6 +38,7 @@ print(f"Duration per evaluation CPU: {(et - st)/num}")
 
 if gpu_available:
     wave_generator = pyGPUExample(use_gpu=True)
+    output_wave = wave_generator(A, f, phi, dt=dt, T=T)
     num = 100
     # time it
     st = time.perf_counter()
