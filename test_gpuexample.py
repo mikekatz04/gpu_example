@@ -15,7 +15,7 @@ from gpuexample.gpuexample import *
 
 np.random.seed(1000)
 
-num_modes = 10
+num_modes = 100
 T = 1.0
 dt = 10.0
 
@@ -34,11 +34,12 @@ for _ in range(num):
     output_wave = wave_generator(A, f, phi, dt=dt, T=T)
 et = time.perf_counter()
 
-print(f"Duration per evaluation CPU: {(et - st)/num}")
+cpu_time = (et - st)/num
+print(f"Duration per evaluation CPU: {cpu_time}")
 
 if gpu_available:
-    wave_generator = pyGPUExample(use_gpu=True)
-    output_wave = wave_generator(A, f, phi, dt=dt, T=T)
+    wave_generator_gpu = pyGPUExample(use_gpu=True)
+    output_wave = wave_generator_gpu(A, f, phi, dt=dt, T=T)
     num = 100
     # time it
     st = time.perf_counter()
@@ -46,4 +47,6 @@ if gpu_available:
         output_wave = wave_generator_gpu(A, f, phi, dt=dt, T=T)
     et = time.perf_counter()
 
-    print(f"Duration per evaluation GPU: {(et - st)/num}")
+    gpu_time = (et - st)/num
+    print(f"Duration per evaluation GPU: {gpu_time}")
+    print(f"Ratio of CPU to GPU: {cpu_time/gpu_time}")
