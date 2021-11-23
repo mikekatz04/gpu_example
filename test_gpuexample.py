@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
+
 try:
     import cupy as xp
     gpu_available = True
@@ -12,6 +13,8 @@ except (ImportError, ModuleNotFoundError) as e:
 
 
 from gpuexample.gpuexample import *
+
+print("Starting Test")
 
 np.random.seed(1000)
 
@@ -27,6 +30,7 @@ phi = np.random.uniform(0.0, 2 * np.pi, size=(num_modes,))
 wave_generator = pyGPUExample(use_gpu=False)
 output_wave = wave_generator(A, f, phi, dt=dt, T=T)
 
+print("Begin CPU timing")
 num = 10
 # time it
 st = time.perf_counter()
@@ -38,6 +42,7 @@ cpu_time = (et - st)/num
 print(f"Duration per evaluation CPU: {cpu_time}")
 
 if gpu_available:
+    print("Begin GPU timing")
     wave_generator_gpu = pyGPUExample(use_gpu=True)
     output_wave = wave_generator_gpu(A, f, phi, dt=dt, T=T)
     num = 100

@@ -3,6 +3,7 @@
 #include "math.h"
 
 
+
 CUDA_KERNEL
 void build_sine_waves(double* output, double* amplitudes, double* frequencies, double* phases, double dt, int num_t, int num_modes)
 {
@@ -49,7 +50,6 @@ void build_sine_waves_wrap(double* output, double* amplitudes, double* frequenci
 
         dim3 gridDim(num_blocks, num_modes);
 
-        //printf("RUNNING: %d\n", i);
         build_sine_waves<<<gridDim, NUM_THREADS>>>
                       (output, amplitudes, frequencies, phases, dt, num_t, num_modes);
 

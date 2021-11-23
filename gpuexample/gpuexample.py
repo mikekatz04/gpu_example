@@ -44,5 +44,7 @@ class pyGPUExample(object):
         output_waves = self.xp.zeros((num_modes, num_t)).flatten()
 
         self.wave_gen(output_waves, A, f, phi, dt, num_t, num_modes)
-        
+
+        # use output_waves.get() to get the numpy array
+
         return output_waves.reshape(num_modes, num_t)
