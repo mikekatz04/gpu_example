@@ -19,8 +19,8 @@ print("Starting Test")
 np.random.seed(1000)
 
 num_modes = 100
-T = 1.0
-dt = 10.0
+T = 1.0  # years
+dt = 10.0  # seconds
 
 A = np.random.uniform(1.0, 10.0, size=(num_modes,))
 f = np.random.uniform(1e-4, 1e-2, size=(num_modes,))

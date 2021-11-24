@@ -9,8 +9,8 @@ void build_sine_waves(double* output, double* amplitudes, double* frequencies, d
 {
     int start1, increment1;
     #ifdef __CUDACC__
-    start1 = blockDim.y;
-    increment1 = gridDim.y;
+    start1 = blockIdx.y;
+    increment1 = gridDim.y;  // number of blocks along y
     #else
     start1 = 0;
     increment1 = 1;
@@ -44,7 +44,8 @@ void build_sine_waves(double* output, double* amplitudes, double* frequencies, d
     }
 }
 
-void build_sine_waves_wrap(double* output, double* amplitudes, double* frequencies, double* phases, double dt, int num_t, int num_modes){
+void build_sine_waves_wrap(double* output, double* amplitudes, double* frequencies, double* phases, double dt, int num_t, int num_modes)
+{
         #ifdef __CUDACC__
         int num_blocks = std::ceil((num_t + NUM_THREADS - 1)/NUM_THREADS);
 
